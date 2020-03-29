@@ -17,16 +17,16 @@
         }
 
         //Check for create_status to show "create" page before tool
-        else if ($_SESSION["access"] == "granted" && $_SESSION["isadmin"] == 0 && $_SESSION['create_status'] == 0) {
-             include './assets/php/header.php';
-            include './assets/php/character_create.php';
-        }
-        else if ($_SESSION["access"] == "granted" && $_SESSION["isadmin"] == 0 && $_SESSION['create_status'] > 0) {
-            include './assets/php/header.php';
-            include './assets/php/player_sidebar.php';
-            include './assets/php/player_content.php';
+        // else if ($_SESSION["access"] == "granted" && $_SESSION["isadmin"] == 0 && $_SESSION['create_status'] == 0) {
+        //      include './assets/php/header.php';
+        //     include './assets/php/character_create.php';
+        // }
+        // else if ($_SESSION["access"] == "granted" && $_SESSION["isadmin"] == 0 && $_SESSION['create_status'] > 0) {
+        //     include './assets/php/header.php';
+        //     include './assets/php/player_sidebar.php';
+        //     include './assets/php/player_content.php';
 
-        }
+        // }
 
 }
     else {?>
@@ -82,7 +82,6 @@
         <!-- Top content -->
         <div class="top-content">
             <!--<div ng-include="'assets/php/validate.php'"></div>-->
-           <!--<div ng-include="assets/php/app.php"></div>-->
             <div class="inner-bg">
                 <div class="container">
                     <div class="row">

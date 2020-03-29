@@ -88,7 +88,6 @@ include $_SERVER['DOCUMENT_ROOT']."/assets/php/auth.php";
         <!-- Top content -->
         <div class="top-content">
             <!--<div ng-include="'assets/php/validate.php'"></div>-->
-           <!--<div ng-include="assets/php/app.php"></div>-->
             <div class="inner-bg">
                 <div class="container">
                     <div class="row">
