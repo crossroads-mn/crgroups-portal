@@ -1,0 +1,16 @@
+<?php 
+	$tmp = explode('.', $_SERVER['HTTP_HOST']);
+	$subdomain = current($tmp);
+
+	$DB_ADDRESS = $_SERVER['CRGROUPS_DB_ADDRESS'];
+    $DB_USER = $_SERVER['CRGROUPS_DB_USER'];
+    $DB_PASS = $_SERVER['CRGROUPS_DB_PASS'];;
+    $DB_SCHEMA = $_SERVER['CRGROUPS_DB_SCHEMA'];;
+
+
+	$GLOBAL_DB_ADDRESS = $DB_ADDRESS;
+	$GLOBAL_DB_USER = $DB_USER;
+	$GLOBAL_DB_PASS = $DB_PASS;
+	$GLOBAL_DB_SCHEMA = $DB_SCHEMA;
+
+?>

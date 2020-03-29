@@ -1,0 +1,92 @@
+<html ng-app="myserviceportal">
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+  <script src="assets/js/app.js"></script>
+  <title>Unearth Admin Tool</title>
+
+  <!-- Bootstrap and Font Awesome -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <!-- Angular Modules for Google Materials -->
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+
+  <!-- Angular Material Library -->
+  <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Oldenburg" rel="stylesheet">
+
+    <!-- Google Analytics -->
+
+</head>
+
+<body ng-controller="uctrl" md-theme-watch="true">
+<header>
+<div ng-include="'header.php'"></div>
+<div class="header-wrapper">
+<div class="header-items">
+           <a href="http://arcticodestudios.com/sys-admin/">Admin Panel</a>
+           <button ng-click="selected='shownpcs'">NPCs</button>
+           <button ng-click="selected='showquests'">Quests</button>
+           <button ng-click="selected='showitems'">Items</button>
+           <button ng-click="selected='showplayers'">Players</button>
+           <button ng-click="selected='showrules'">Rules</button>
+           <button ng-click="selected='showskills'">Skills</button>
+           <button ng-click="selected='showspells'">Spells</button>
+           <button ng-click="selected='showstats'">Statistics</button>
+           <a href="#logout">Log Out</a>
+</div>
+</div>
+</header>
+<div class="sidebar" ng-init="dashboard=true;"></div>
+    <md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="true" md-whiteframe="4">
+      <md-toolbar>
+        <div ng-click="selected='dashboard'"><h1 class="md-toolbar-tools"><a href="/sandbox-admin/panel.html">Unearth Online Toolkit</a></h1></div>
+      </md-toolbar>
+      <md-content>
+      <md-list flex>
+        <md-list-item ng-click="change_selected(opt.name)" ng-repeat="opt in options">
+        <i class="fa //opt.icon//" aria-hidden="true" pull-left></i>//opt.name//
+        </md-list-item>
+      </md-list>
+      </md-content>
+    </md-sidenav>
+<div class="content-window">
+      <div ng-show="selected=='dashboard'">
+        <!-- Dashboard Here -->
+        <h1>Dashboard</h1>
+        
+      </div>
+
+      <div ng-show="selected=='Create an NPC'">
+        <div ng-include="'newnpc.php'"></div>
+      </div>
+
+      <div ng-show="selected=='integrations'">
+      <h1>Integrations</h1>
+      </div>
+
+      <div ng-show="selected=='settings'">
+        <h1>Settings</h1>
+      </div>
+
+      <div ng-show="selected=='shownpcs'">
+        <div ng-include="'npcs.php'"></div>
+      </div>
+      <div ng-show="selected=='showitems'">
+        <div ng-include="'items.php'"></div>
+      </div>
+      <div ng-show="selected=='editnpc'">
+        <div ng-include="'editnpc.php'"></div>
+      </div>
+    </div>
+  </div>
+
+
+</body>
+</html>
