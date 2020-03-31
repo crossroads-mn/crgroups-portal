@@ -16,7 +16,7 @@ if (isset($_POST["form-username"]) && !empty($_POST["form-username"])) {
 
 		/* establish a connection with the database */
 
-		$connection = mysqli_connect($DB_ADDRESS, $DB_USER, $DB_PASS, $DB_SCHEMA, $DB_PORT);
+		$connection = mysqli_connect($DB_ADDRESS, $DB_USER, $DB_PASS, $DB_SCHEMA);
 		$user = htmlspecialchars($_POST["form-username"]);
 
 		$saltquery = "SELECT SALT FROM ACCOUNTS WHERE USERNAME= '$user'";

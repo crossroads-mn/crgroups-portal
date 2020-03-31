@@ -27,7 +27,7 @@ function scrub_array($arr, $headers) {
 
         }
         else {
-          $connection = mysqli_connect($DB_ADDRESS, $DB_USER, $DB_PASS, $DB_SCHEMA, $DB_PORT);
+          $connection = mysqli_connect($DB_ADDRESS, $DB_USER, $DB_PASS, $DB_SCHEMA);
           
           $obj['data'][$head] = iconv('UTF-8', 'ASCII//TRANSLIT', $obj['data'][$head]);
           $obj['data'][$head] = $connection->real_escape_string($obj['data'][$head]);
@@ -128,7 +128,7 @@ if(isset($_POST["submit"])) {
     }
 
     // Insert data into database here
-    $connection = new mysqli($DB_ADDRESS, $DB_USER, $DB_PASS, $DB_SCHEMA, $DB_PORT);
+    $connection = new mysqli($DB_ADDRESS, $DB_USER, $DB_PASS, $DB_SCHEMA);
    // echo $large_insert_statement;
      $result = mysqli_query($connection, $large_insert_statement) or die('{"records": [{"error": "' . mysqli_error($connection) . '"}]}');
     // echo $large_insert_statement;

@@ -28,7 +28,7 @@ $json = file_get_contents('php://input');
 $obj = json_decode($json, true); //true means it will be an assoc array
 $table = strtoupper($obj['table']); //This should yield which table in database to use
 
-$connection = mysqli_connect($DB_ADDRESS, $DB_USER, $DB_PASS, $DB_SCHEMA, $DB_PORT);
+$connection = mysqli_connect($DB_ADDRESS, $DB_USER, $DB_PASS, $DB_SCHEMA);
 $sys_id = $obj['data']['SYS_ID'];
 if ($sys_id == '') {
 	//Generate a new SYS_ID
@@ -166,7 +166,7 @@ if($table == "INCIDENT") {
 	//We will connect to the global incident table and submit the ticket into there. 
 	//We will also create an email and send it out.
 	//$subject = "Incident Logged for " . implode($_SERVER['HTTP_HOST']);
-	$connection = mysqli_connect($DB_ADDRESS, $DB_USER, $DB_PASS, $DB_SCHEMA, $DB_PORT);
+	$connection = mysqli_connect($DB_ADDRESS, $DB_USER, $DB_PASS, $DB_SCHEMA);
 	$headers = "Content-Type: text/html";
 	//$url = implode($_SERVER['HTTP_HOST']);
 	$url = "test";

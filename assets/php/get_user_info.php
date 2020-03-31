@@ -16,7 +16,7 @@ session_start();
 if ($_SESSION["access"] == "granted") {
 	//check if user is logged in
 	$pid = $_SESSION['GUID'];
-	$connection = mysqli_connect($DB_ADDRESS, $DB_USER, $DB_PASS, $DB_SCHEMA, $DB_PORT);
+	$connection = mysqli_connect($DB_ADDRESS, $DB_USER, $DB_PASS, $DB_SCHEMA);
 
 	if($_SESSION["isadmin"] == 1) {
 
