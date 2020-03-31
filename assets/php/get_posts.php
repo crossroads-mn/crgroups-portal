@@ -17,7 +17,7 @@ $obj = json_decode($json, true); //true means it will be an assoc array
 $table = strtoupper($obj['table']); //This should yield which table in database to use
 $guid = $_SESSION['GUID'];
 
-$connection = mysqli_connect($DB_ADDRESS, $DB_USER, $DB_PASS, $DB_SCHEMA);
+$connection = mysqli_connect($DB_ADDRESS, $DB_USER, $DB_PASS, $DB_SCHEMA, $DB_PORT);
 $query = "SELECT * FROM POSTS LIMIT 20";
 $result = mysqli_query($connection, $query) or die('{"records": [{"error": "' . mysqli_error($connection) . '"}]}');
 $info = array();

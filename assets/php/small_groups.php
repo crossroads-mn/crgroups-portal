@@ -51,7 +51,7 @@ $obj = json_decode($json, true); //true means it will be an assoc array
 $table = strtoupper($obj['table']); //This should yield which table in database to use
 //$guid = $_SESSION['GUID'];
 
-$connection = mysqli_connect($DB_ADDRESS, $DB_USER, $DB_PASS, $DB_SCHEMA);
+$connection = mysqli_connect($DB_ADDRESS, $DB_USER, $DB_PASS, $DB_SCHEMA, $DB_PORT);
 mysqli_set_charset($connection, "utf8");
 //TARGET_AUDIENCE, MEET_DAY, MEET_TIME_START, DURATION, LEADER, PHONE_NUMBER, EMAIL, LOCATION, CAMPUS, GROUP_LINK, GROUP_TYPE,TRIM(DESCRIPTION) as DESCRIPTION 
 $query = "SELECT SYS_ID, DATE_SUBMITTED, TITLE, TARGET_AUDIENCE, MEET_DAY, MEET_TIME_START, DURATION, LEADER, PHONE_NUMBER, EMAIL, LOCATION, CAMPUS, GROUP_LINK, GROUP_TYPE, ACTIVE, TRIM(DESCRIPTION) as DESCRIPTION FROM SMALL_GROUPS LIMIT 999";

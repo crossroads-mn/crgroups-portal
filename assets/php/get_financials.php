@@ -10,7 +10,7 @@ function slug($z){
 
 include 'auth.php';
 
-$connection = mysqli_connect($DB_ADDRESS, $DB_USER, $DB_PASS, $DB_SCHEMA);
+$connection = mysqli_connect($DB_ADDRESS, $DB_USER, $DB_PASS, $DB_SCHEMA, $DB_PORT);
 	$query = "SELECT * FROM API_INTEGRATIONS WHERE NAME = 'Freshbooks';";
 	$result = mysqli_query($connection, $query) or die("Query fail: " . mysqli_error());
 	$outp = "";
