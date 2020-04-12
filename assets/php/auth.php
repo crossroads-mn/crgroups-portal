@@ -1,18 +1,16 @@
 <?php 
+	require_once(__DIR__ . "/env.php");
+
 	$tmp = explode('.', $_SERVER['HTTP_HOST']);
 	$subdomain = current($tmp);
 
 	// Parse connection string
 	if ( !isset($MYSQL_CONN_STRING) || empty($MYSQL_CONN_STRING)) {
-		if ( isset($_SERVER["MYSQL_CONN_STRING"]) && !empty($_SERVER["MYSQL_CONN_STRING"]) ) {
-			$MYSQL_CONN_STRING = $_SERVER["MYSQL_CONN_STRING"];
-		}
-		else if ( isset($_ENV["MYSQL_CONN_STRING"]) && !empty($_ENV["MYSQL_CONN_STRING"]) ) {
-			$MYSQL_CONN_STRING = $_ENV["MYSQL_CONN_STRING"];
-		}	
+		$MYSQL_CONN_STRING = get_setting("MYSQL_CONN_STRING");
 	}
 
 	if (!isset($MYSQL_CONN_STRING)) {
+		error_log("Unable to find MYSQL_CONN_STRING");
 		die("Unable to find MYSQL_CONN_STRING");
 	}
 
