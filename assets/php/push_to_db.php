@@ -10,6 +10,8 @@ function slug($z){
 
 
 require_once(__DIR__ . '/auth.php');
+require_once(__DIR__ . '/logger.php');
+
 session_start();
 //Create a connection
 
@@ -177,7 +179,7 @@ if($table == "INCIDENT") {
 	//$url = implode($_SERVER['HTTP_HOST']);
 	$url = "test";
 	$message = '<div style="background: #231432; color: white; height: 120px;padding-left: 20px; padding-top: 6px; margin:0px;"><h1>a new incident has been created.</h1></div><div style="background: #666; color:white; height:400px; margin:0px; padding-top:10px; padding-left: 20px;"><h4><strong>To the wonderful support team at thread. software,</strong></h4><p><em>A ticket has been submitted, therefore something is not quite working right. For more information on this ticket, please follow the button below.</em></p><p>Thank you for taking a look at this, your support is not overlooked. You help this company run smoothly and are valued! If you have any concerns or questions, always feel free to reach out to your manager/supervisor and have an open discussion with them about the issue. </p><form action="https://admin-dev.trythread.com?table=Incident&sys_id=' . $sys_id . '"><input style="background-color: #4B3A5C; color: white; height: 40px; width: auto; padding: 10px;"  type="submit" value="View the Incident" /></form>';
-	error_log($message, 1, "support@trythread.com", $headers);
+	log_message($message, 1, "support@trythread.com", $headers);
 	mysqli_query($connection, $insert) or die('{"records": [{"error": "' . mysqli_error($connection) . '"}]}');
 	//$headers .= "MIME-Version: 1.0\r\n";
 	//$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
@@ -195,14 +197,12 @@ $update = $update_statement . $update_set . " WHERE SYS_ID = '" . $obj['data']['
 
 //Now we gotta check whether we should query the insert or update
 if ($_SESSION["access"] == "granted") {
-	//check if user is logged in
-	//$server = mysql_connect($DB_ADDRESS, $DB_USER, $DB_PASS);
 	if (!$newfile) {
 		$query = "SELECT * FROM $table WHERE SYS_ID = '$sys_id';";
-		error_log('Looking up record at: ' . $query);
-		$result = mysqli_query($connection, $query) or die('{"records": [{"error": "' . mysqli_error($connection) . '"}]}');
+		log_message('Looking up record at: ' . $query);
+		$result = query_with_checks($connection, $query);
 	}
-	//while($rs = $result->fetch_array(MYSQLI_ASSOC)) {
+
 	if($rs = mysqli_fetch_array($result)) {
 		//Sets if it exists in db
 		$exists_in_db = true;
@@ -210,25 +210,28 @@ if ($_SESSION["access"] == "granted") {
 
 	if ($exists_in_db) {
 		//Run the UPDATE
-		$result = mysqli_query($connection, $update);
-		if (!$result) {
-			error_log(mysqli_error($connection));
-			die('{"records": [{"error": "' . mysqli_error($connection) . '"}]}');
-		}
-		
-		error_log($update);
+		query_with_checks($connection, $update);
 		echo '{"records": [{"updated": 1, "inserted": 0}]}';
 	}
 
 	else {
 		//Run the INSERT
-		$result = mysqli_query($connection, $insert) or die('{"records": [{"error": "' . mysqli_error($connection) . '"}]}');
-		error_log($insert);
+		query_with_checks($connection, $insert);
 		echo '{"records": [{"updated": 0, "inserted": 1}]}';
 	}
 
-	//echo '{"records":[{"exists": "' . $exists_in_db . '"}]}';
-	//mysqli_query($connection, )
 	$connection->close();
+}
+
+function query_with_checks($connection, $command) {
+	$result = mysqli_query($connection, $command);
+	if (!$result) {
+		error_log(mysqli_error($connection));
+		die('{"records": [{"error": "' . mysqli_error($connection) . '"}]}');
+	}
+
+	log_message($command);
+
+	return $result;
 }
 ?>
