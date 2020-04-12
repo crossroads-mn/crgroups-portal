@@ -9,7 +9,7 @@ function slug($z){
 }
 
 
-include 'auth.php';
+require_once(__DIR__ . '/auth.php');
 session_start();
 //Create a connection
 
@@ -34,10 +34,6 @@ if ($sys_id == '') {
 	//Generate a new SYS_ID
 	$obj['data']['SYS_ID'] = md5(uniqid());
 	$newfile = true;
-}
-
-if ($obj['data']['SYS_CREATED_ON'] == '') {
-	$obj['data']['SYS_CREATED_ON'] = date("Y-m-d H:i:s");
 }
 
 if (array_key_exists('PASSWORD', $obj['data'])) {
@@ -129,7 +125,7 @@ if (array_key_exists('DATE_OF_EVENT', $obj['data'])) {
 }
 
 if (array_key_exists('DURATION', $obj['data'])) {
-$obj['data']['DURATION'] = iconv('UTF-8', 'ASCII//TRANSLIT', $connection->real_escape_string($obj['data']['DURATION']));
+	$obj['data']['DURATION'] = iconv('UTF-8', 'ASCII//TRANSLIT', $connection->real_escape_string($obj['data']['DURATION']));
 }
 
 if (array_key_exists('CHILDCARE_LINK', $obj['data'])) {
@@ -148,10 +144,20 @@ if (array_key_exists('MEET_TIME_START', $obj['data'])) {
 	$obj['data']['MEET_TIME_START'] = iconv('UTF-8', 'ASCII//TRANSLIT', $connection->real_escape_string($obj['data']['MEET_TIME_START']));
 }
 
+
 if (array_key_exists('SYS_CREATED_BY', $obj['data'])) {
 	if(isset($_SESSION['GUID'])) {
 		$obj['data']['SYS_CREATED_BY'] = $_SESSION['GUID'];
 	}
+}
+
+// Client should not set `DATE_SUBMITTED` or `SYS_CREATED_ON`
+if (array_key_exists('DATE_SUBMITTED', $obj['data'])) {
+	unset($obj['data']['DATE_SUBMITTED']);
+}
+
+if (array_key_exists('SYS_CREATED_ON', $obj['data'])) {
+	unset($obj['data']['SYS_CREATED_ON']);
 }
 
 $insert_statement = "INSERT INTO $table ";
@@ -188,7 +194,7 @@ $update = $update_statement . $update_set . " WHERE SYS_ID = '" . $obj['data']['
 
 
 //Now we gotta check whether we should query the insert or update
-//if ($_SESSION["access"] == "granted") {
+if ($_SESSION["access"] == "granted") {
 	//check if user is logged in
 	//$server = mysql_connect($DB_ADDRESS, $DB_USER, $DB_PASS);
 	if (!$newfile) {
@@ -204,7 +210,12 @@ $update = $update_statement . $update_set . " WHERE SYS_ID = '" . $obj['data']['
 
 	if ($exists_in_db) {
 		//Run the UPDATE
-		$result = mysqli_query($connection, $update) or die('{"records": [{"error": "' . mysqli_error($connection) . '"}]}');
+		$result = mysqli_query($connection, $update);
+		if (!$result) {
+			error_log(mysqli_error($connection));
+			die('{"records": [{"error": "' . mysqli_error($connection) . '"}]}');
+		}
+		
 		error_log($update);
 		echo '{"records": [{"updated": 1, "inserted": 0}]}';
 	}
@@ -219,5 +230,5 @@ $update = $update_statement . $update_set . " WHERE SYS_ID = '" . $obj['data']['
 	//echo '{"records":[{"exists": "' . $exists_in_db . '"}]}';
 	//mysqli_query($connection, )
 	$connection->close();
-//}
+}
 ?>

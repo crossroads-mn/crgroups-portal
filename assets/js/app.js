@@ -152,9 +152,6 @@ myserviceportal.controller('uctrl', function uctrl($scope, $interval, $http, $lo
 		.then(function (response) {
 			$scope.posts = response.data;
 			console.log($scope.posts);
-			for(var b in $scope.posts) {
-				$scope.posts[b]['DATE_SUBMITTED'] = new Date($scope.posts[b]['DATE_SUBMITTED']).toDateString();
-			}
 		});
 	}
 
