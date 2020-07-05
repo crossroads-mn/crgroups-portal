@@ -1,3 +1,4 @@
 .vscode/
 sessions/
 uploads/
+*.Identifier

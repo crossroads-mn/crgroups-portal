@@ -27,11 +27,10 @@ function scrub_array($arr, $headers) {
 
         }
         else {
-          $connection = mysqli_connect($DB_ADDRESS, $DB_USER, $DB_PASS, $DB_SCHEMA);
           
           $obj['data'][$head] = iconv('UTF-8', 'ASCII//TRANSLIT', $obj['data'][$head]);
-          $obj['data'][$head] = $connection->real_escape_string($obj['data'][$head]);
-          mysqli_close($connection);
+          $obj['data'][$head] = $DB_CONN->real_escape_string($obj['data'][$head]);
+          mysqli_close($DB_CONN);
 
         }
       }
@@ -80,7 +79,7 @@ if(isset($_POST["submit"])) {
     //echo(var_dump(implode(",", $csv[0])));
 
     $json_array = array();
-    $expected_headers = "GUID,DATE_SUBMITTED,IP_ADDRESS,OWNER,SEMESTER,GROUP_TYPE,CAMPUS,LOCATION,TITLE,DESCRIPTION,TARGET_AUDIENCE,MEET_DAY,IDEAL_SIZE,MEET_TIME_START,MEET_TIME_END,DURATION,LEADER,PHONE_NUMBER,EMAIL,PREVIOUS_LEADERSHIP,CO_LEADER,CO_LEADER_PHONE,CO_LEADER_EMAIL,CO_LEADER_PREVIOUS_LEADERSHIP,COST,CARE_PROVIDED,NOTES,GROUP_LINK,BOOK_LINKS,WHY,SYS_CREATED_ON,AUTHOR,SYS_ID,ACTIVE";
+    $expected_headers = "GUID,IP_ADDRESS,OWNER,SEMESTER,GROUP_TYPE,CAMPUS,LOCATION,TITLE,DESCRIPTION,TARGET_AUDIENCE,MEET_DAY,IDEAL_SIZE,MEET_TIME_START,MEET_TIME_END,DURATION,LEADER,PHONE_NUMBER,EMAIL,PREVIOUS_LEADERSHIP,CO_LEADER,CO_LEADER_PHONE,CO_LEADER_EMAIL,CO_LEADER_PREVIOUS_LEADERSHIP,COST,CARE_PROVIDED,NOTES,GROUP_LINK,BOOK_LINKS,WHY,SYS_CREATED_ON,AUTHOR,SYS_ID,ACTIVE";
 
     $large_insert_statement = 'INSERT INTO `SMALL_GROUPS` (' . $expected_headers . ') VALUES ';
 
@@ -128,9 +127,7 @@ if(isset($_POST["submit"])) {
     }
 
     // Insert data into database here
-    $connection = new mysqli($DB_ADDRESS, $DB_USER, $DB_PASS, $DB_SCHEMA);
-   // echo $large_insert_statement;
-     $result = mysqli_query($connection, $large_insert_statement) or die('{"records": [{"error": "' . mysqli_error($connection) . '"}]}');
+     $result = mysqli_query($DB_CONN, $large_insert_statement) or die('{"records": [{"error": "' . mysqli_error($DB_CONN) . '"}]}');
     // echo $large_insert_statement;
 
   } else {

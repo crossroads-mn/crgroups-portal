@@ -17,9 +17,8 @@ include './assets/php/sidebar.php';
 	//check if user is logged in
 	$pid = $_GET['pid'];
 
-	$connection = mysqli_connect($DB_ADDRESS, $DB_USER, $DB_PASS, $DB_SCHEMA);
 	$query = "SELECT * FROM TASK WHERE PID = $pid;";
-	$result = mysqli_query($connection, $query) or die("Query fail: " . mysqli_error());
+	$result = mysqli_query($DB_CONN, $query) or die("Query fail: " . mysqli_error());
 	$outp = "";
 
 	while($rs = mysqli_fetch_array($result)) {

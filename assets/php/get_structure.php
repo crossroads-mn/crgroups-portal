@@ -24,9 +24,8 @@ $json = file_get_contents('php://input');
 $obj = json_decode($json, true); //true means it will be an assoc array
 $table = strtoupper($obj['table']); //This should yield which table in database to use
 
-$connection = mysqli_connect($DB_ADDRESS, $DB_USER, $DB_PASS, $DB_SCHEMA);
 $query = "SELECT * FROM $table LIMIT 1";
-$result = mysqli_query($connection, $query) or die('{"records": [{"error": "' . mysqli_error($connection) . '"}]}');
+$result = mysqli_query($DB_CONN, $query) or die('{"records": [{"error": "' . mysqli_error($DB_CONN) . '"}]}');
 $info = array();
 
 if($rs = mysqli_fetch_assoc($result)) {

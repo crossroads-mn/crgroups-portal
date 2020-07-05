@@ -10,16 +10,15 @@ function slug($z){
 
 include 'auth.php';
 
-$connection = mysqli_connect($DB_ADDRESS, $DB_USER, $DB_PASS, $DB_SCHEMA);
-	$query = "SELECT * FROM API_INTEGRATIONS WHERE NAME = 'Freshbooks';";
-	$result = mysqli_query($connection, $query) or die("Query fail: " . mysqli_error());
-	$outp = "";
+$query = "SELECT * FROM API_INTEGRATIONS WHERE NAME = 'Freshbooks';";
+$result = mysqli_query($DB_CONN, $query) or die("Query fail: " . mysqli_error());
+$outp = "";
 
-	if($rs = mysqli_fetch_array($result)) {
-		$client_id = $rs['TOKEN'];
-		$client_secret = $rs['SECRET'];
-	}
-	$connection->close();
+if($rs = mysqli_fetch_array($result)) {
+	$client_id = $rs['TOKEN'];
+	$client_secret = $rs['SECRET'];
+}
+$DB_CONN->close();
 
 //Global vars needed
 $redirect_uri = "https://" .  $_SERVER['SERVER_NAME'] . "/index.php";

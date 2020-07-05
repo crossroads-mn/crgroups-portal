@@ -21,7 +21,6 @@ include $_SERVER['DOCUMENT_ROOT']."/assets/php/auth.php";
 }
     else if ($_POST) {
             //Store the info from the post request into MySQL
-            $connection = mysqli_connect($DB_ADDRESS, $DB_USER, $DB_PASS, $DB_SCHEMA);
             $sys_id = md5(uniqid());
             $salt = md5(uniqid());
             $fname = $_POST['form-firstname'];
@@ -31,7 +30,7 @@ include $_SERVER['DOCUMENT_ROOT']."/assets/php/auth.php";
             $password = $_POST['form-password'] . $salt;
             $registration_code = mt_rand(100000, 999999);
             $query = "INSERT INTO ACCOUNTS (SYS_ID, FIRST_NAME, LAST_NAME, USERNAME, EMAIL, PASSWORD, SALT, ADMIN_FLAG, REGISTER_CODE) VALUES ('$sys_id', '$fname', '$lname', '$user', '$email', MD5('$password'), '$salt', 1, $registration_code);";
-            $result = mysqli_query($connection, $query) or die("Query fail: $DB_ADDRESS : $DB_USER : $DB_SCHEMA " . mysqli_error($connection));
+            $result = mysqli_query($DB_CONN, $query) or die("Query fail: $DB_ADDRESS : $DB_USER : $DB_SCHEMA " . mysqli_error($connection));
             header("Location: /index.php");
         }
     else {?>
