@@ -27,7 +27,11 @@ $GLOBAL_DB_PASS = $DB_PASS;
 $GLOBAL_DB_SCHEMA = $DB_SCHEMA;
 
 $DB_CONN=mysqli_init();
-mysqli_ssl_set($DB_CONN, NULL, NULL, $ca_file, NULL, NULL); 
+
+// Bypass sql cert for local development setup
+if ($DB_ADDRESS != 'localhost') {
+	mysqli_ssl_set($DB_CONN, NULL, NULL, $ca_file, NULL, NULL); 
+}
 mysqli_real_connect($DB_CONN, $DB_ADDRESS, $DB_USER, $DB_PASS, $DB_SCHEMA, 3306);
 
 if ($DB_CONN->connect_errno != 0) {
