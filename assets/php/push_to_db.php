@@ -161,6 +161,19 @@ if (array_key_exists('SYS_CREATED_ON', $obj['data'])) {
 	unset($obj['data']['SYS_CREATED_ON']);
 }
 
+// Ensure proper setting of CARE_PROVIDED (string value '1' or '0')
+if (array_key_exists('CARE_PROVIDED', $obj['data'])) {
+	$care_provided = $obj['data']['CARE_PROVIDED'];
+
+	if (preg_match("/yes/i", $care_provided) || $care_provided == 1) {
+		$obj['data']['CARE_PROVIDED'] = "1";
+	}
+	else {
+		$obj['data']['CARE_PROVIDED'] = "0";
+	}
+}
+
+
 $insert_statement = "INSERT INTO $table ";
 $insert_set = "(" . implode(',', array_keys($obj['data'])) . ")";
 $insert_values = "('" . implode("','", $obj['data']) . "')";
