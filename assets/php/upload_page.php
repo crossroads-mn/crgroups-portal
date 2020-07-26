@@ -1,16 +1,24 @@
 <?php
 
-include 'auth.php';
+require_once(__DIR__ . '/auth.php');
 session_start();
 //Desired MIME types for file format
 $mimes = array('application/vnd.ms-excel','text/plain','text/csv','text/tsv');
 
-function scrub_array($arr, $headers) {
+//Remove UTF8 Bom
+
+function remove_utf8_bom($text)
+{
+    $bom = pack('H*','EFBBBF');
+    $text = preg_replace("/^$bom/", '', $text);
+    return $text;
+}
+
+function scrub_array($arr, $headers, $db_conn) {
   $headers = explode(',', $headers);
   $obj['data'] = $arr;
   if ($obj['data']['SYS_ID'] == '') {
-  //Generate a new SYS_ID
-  $obj['data']['SYS_ID'] = md5(uniqid());
+    $obj['data']['SYS_ID'] = md5(uniqid());
   }
 
   if ($obj['data']['SYS_CREATED_ON'] == '') {
@@ -21,23 +29,33 @@ function scrub_array($arr, $headers) {
     $obj['data']['PASSWORD'] = md5($obj['data']['PASSWORD']);
   }
 
-    foreach($headers as $head) {
-      if (array_key_exists($head, $obj['data'])) {
-        if (is_null($obj['data'][$head])) {
+  // Ensure proper setting of CARE_PROVIDED (string value '1' or '0')
+  if (array_key_exists('CARE_PROVIDED', $obj['data'])) {
+    $care_provided = $obj['data']['CARE_PROVIDED'];
 
-        }
-        else {
-          
-          $obj['data'][$head] = iconv('UTF-8', 'ASCII//TRANSLIT', $obj['data'][$head]);
-          $obj['data'][$head] = $DB_CONN->real_escape_string($obj['data'][$head]);
-          mysqli_close($DB_CONN);
+    if (preg_match("/yes/i", $care_provided) || $care_provided == 1) {
+      $obj['data']['CARE_PROVIDED'] = "1";
+    }
+    else {
+      $obj['data']['CARE_PROVIDED'] = "0";
+    }
+  }
 
-        }
+  foreach($headers as $head) {
+    if (array_key_exists($head, $obj['data'])) {
+      if (is_null($obj['data'][$head])) {
+
       }
       else {
-        $obj['data'][$head] = '';
+        
+        $obj['data'][$head] = iconv('UTF-8', 'ASCII//TRANSLIT', $obj['data'][$head]);
+        $obj['data'][$head] = mysqli_real_escape_string($db_conn, $obj['data'][$head]);
       }
     }
+    else {
+      $obj['data'][$head] = '';
+    }
+  }
 
   if (array_key_exists('SYS_CREATED_BY', $obj['data'])) {
     if(isset($_SESSION['GUID'])) {
@@ -63,30 +81,33 @@ if(isset($_POST["submit"])) {
   //Check .csv filetype
   if(in_array($_FILES['fileUpload']['type'],$mimes)){
     $uploadOk = 1;
-    // $contents = file_get_contents($_FILES['fileUpload']['tmp_name']);
     
     $loc = 0;
-    //$upload_array = preg_split('/\r\n|\r|\n/', $contents);
-    //$upload_array = str_getcsv($contents, ",", '"');
-
     $csv = array_map('str_getcsv', file($_FILES['fileUpload']['tmp_name']));
-    array_walk($csv, function(&$a) use ($csv) {
-      $a = array_combine($csv[0], $a);
+
+    // Process first row of CSV as header
+    // strip any BOM from header rows (bug via Excel Mac csv export)
+    foreach ($csv[0] as $k => $v) {
+      $key = remove_utf8_bom($v);
+      $upload_array[0][$key] = $key;
+    }
+
+    // Strip first row frm csv
+    array_splice($csv, 0, 1);
+
+    array_walk($csv, function(&$row) use (&$upload_array) {
+      $keyed_row = array_combine($upload_array[0], $row);
+      array_push($upload_array, $keyed_row);
     });
-     # remove column header
 
-    $upload_array = $csv;
-    //echo(var_dump(implode(",", $csv[0])));
+    $expected_headers = "SEMESTER,GROUP_TYPE,CAMPUS,LOCATION,TITLE,DESCRIPTION,TARGET_AUDIENCE,MEET_DAY,IDEAL_SIZE,MEET_TIME_START,MEET_TIME_END,DURATION,LEADER,PHONE_NUMBER,EMAIL,CO_LEADER,CO_LEADER_PHONE,CO_LEADER_EMAIL,COST,CARE_PROVIDED,NOTES,GROUP_LINK,BOOK_LINKS,WHY";
 
-    $json_array = array();
-    $expected_headers = "GUID,IP_ADDRESS,OWNER,SEMESTER,GROUP_TYPE,CAMPUS,LOCATION,TITLE,DESCRIPTION,TARGET_AUDIENCE,MEET_DAY,IDEAL_SIZE,MEET_TIME_START,MEET_TIME_END,DURATION,LEADER,PHONE_NUMBER,EMAIL,PREVIOUS_LEADERSHIP,CO_LEADER,CO_LEADER_PHONE,CO_LEADER_EMAIL,CO_LEADER_PREVIOUS_LEADERSHIP,COST,CARE_PROVIDED,NOTES,GROUP_LINK,BOOK_LINKS,WHY,SYS_CREATED_ON,AUTHOR,SYS_ID,ACTIVE";
-
-    $large_insert_statement = 'INSERT INTO `SMALL_GROUPS` (' . $expected_headers . ') VALUES ';
+    $large_insert_statement = 'INSERT INTO `SMALL_GROUPS` (' . $expected_headers . ',SYS_ID, SYS_CREATED_ON ) VALUES ';
 
     foreach ( $upload_array as $csvline) {
       if ($loc == 0) {
         if (implode(",",$csvline) != $expected_headers) {
-          echo "Something bad happened with the upload. Please make sure you have downloaded the correct template file.";
+          die ("Something bad happened with the upload. Please make sure you have downloaded the correct template file.");
         }
       }
 
@@ -113,7 +134,7 @@ if(isset($_POST["submit"])) {
           }
         }
 
-        $tmparray = scrub_array($tmparray, $expected_headers);
+        $tmparray = scrub_array($tmparray, $expected_headers, $DB_CONN);
         unset($counter);
         $counter = 0;
         $large_insert_statement .= '("' . implode('","', $tmparray) . '")' ;
@@ -127,8 +148,10 @@ if(isset($_POST["submit"])) {
     }
 
     // Insert data into database here
-     $result = mysqli_query($DB_CONN, $large_insert_statement) or die('{"records": [{"error": "' . mysqli_error($DB_CONN) . '"}]}');
-    // echo $large_insert_statement;
+    mysqli_query($DB_CONN, $large_insert_statement) or die('{"records": [{"error": "' . mysqli_error($DB_CONN) . '"}]}');
+    $new_groups = mysqli_affected_rows($DB_CONN);
+
+    echo 'Created ' . $new_groups . ' new group(s)';
 
   } else {
     $uploadOk = 0;
@@ -176,7 +199,7 @@ $db->query($query);
       <md-nav-item md-nav-click="goto_page('/index.php?table=Groups')" name="view">
         Browse Groups
       </md-nav-item>
-      <md-nav-item md-nav-click="goto_page('https://doc-0o-7k-docs.googleusercontent.com/docs/securesc/h7ov77qf03hcl14n6ck8nbf0ttenncu3/k0cr0nhpt8772g809t6gnf09u228sqcv/1537984800000/08509202125740856560/08509202125740856560/1hTj6JQyd6ZAZsTrwoJGXH-ePw6iLmUGB?e=download&h=13396321440024111003&nonce=9fjbpq47si684&user=08509202125740856560&hash=')" name="new">
+      <md-nav-item md-nav-click="goto_page('/assets/csv/20200726-groups-upload-template.csv')" name="new">
         <!-- Leads to a download link of the .csv file -->
         Download Template
       </md-nav-item>
