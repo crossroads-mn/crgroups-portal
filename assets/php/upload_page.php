@@ -187,7 +187,7 @@ $db->query($query);
       <md-nav-item md-nav-click="goto_page('/index.php?table=Groups')" name="view">
         Browse Groups
       </md-nav-item>
-      <md-nav-item md-nav-click="goto_page('https://doc-0o-7k-docs.googleusercontent.com/docs/securesc/h7ov77qf03hcl14n6ck8nbf0ttenncu3/k0cr0nhpt8772g809t6gnf09u228sqcv/1537984800000/08509202125740856560/08509202125740856560/1hTj6JQyd6ZAZsTrwoJGXH-ePw6iLmUGB?e=download&h=13396321440024111003&nonce=9fjbpq47si684&user=08509202125740856560&hash=')" name="new">
+      <md-nav-item md-nav-click="goto_page('/assets/csv/20200726-groups-upload-template.csv')" name="new">
         <!-- Leads to a download link of the .csv file -->
         Download Template
       </md-nav-item>
