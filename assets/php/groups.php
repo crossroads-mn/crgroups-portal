@@ -76,6 +76,7 @@
 </md-card>
 </div>
 
+<!-- NEW FIELDS -->
 <div layout-gt-md="row" ng-if="groups_sub_selected=='new'" >
 	<div flex-gt-md="70">
 		<md-card layout-padding>
@@ -87,26 +88,41 @@
 			</md-card-title-text>
 			<md-card-content>
 				<md-input-container style="width: 100%">
-				<label>Group Description</label>
-			<textarea name="content" ng-model="current_group.data.DESCRIPTION" rows="8"></textarea>
-		</md-input-container>
-		<md-input-container style="width: 100%">
-			<label>Why Pick this Group?</label>
-			<textarea name="content" ng-model="current_group.data.WHY" rows="8"></textarea>
-		</md-input-container>
-		<md-input-container style="width: 100%">
-				<label>Notes</label>
-			<textarea name="content" ng-model="current_group.data.NOTES" rows="8"></textarea>
-		</md-input-container>
-				<md-input-container>
-			<label>Registration Link</label>
-			<input required type="text" ng-model="current_group.data.GROUP_LINK">
-		</md-input-container>
-	</md-card-content>
+					<label>Day of Meeting ('Sunday', 'Monday', 'Tuesday'...)</label>
+					<input type='text' ng-model="current_group.data.MEET_DAY">
+				</md-input-container>
+				<md-input-container style="width: 100%">
+					<label>Location/Campus ('Woodbury', 'Eagan', 'Cottage Grove', 'Hastings', 'Other')</label>
+					<input required type="text" ng-model="current_group.data.CAMPUS">
+				</md-input-container>
+				<md-input-container style="width: 100%">
+					<label>Category ('Young Adult', 'Women', 'Men', 'Couples', 'Support', 'Interest')</label>
+					<input required type="text" ng-model="current_group.data.CATEGORY">
+				</md-input-container>
+				<md-input-container style="width: 100%">
+					<label>Group Type ('Zoom', 'Outdoor', 'Inside')</label>
+					<input required type="text" ng-model="current_group.data.GROUP_TYPE">
+				</md-input-container>
+				<md-input-container style="width: 100%">
+					<label>Group Description</label>
+					<textarea name="content" ng-model="current_group.data.DESCRIPTION" rows="8"></textarea>
+				</md-input-container>
+				<md-input-container style="width: 100%">
+					<label>Why Pick this Group?</label>
+					<textarea name="content" ng-model="current_group.data.WHY" rows="8"></textarea>
+				</md-input-container>
+				<md-input-container style="width: 100%">
+					<label>Notes</label>
+					<textarea name="content" ng-model="current_group.data.NOTES" rows="8"></textarea>
+				</md-input-container>
+				<md-input-container style="width: 100%">
+					<label>Registration Link</label>
+					<input required type="text" ng-model="current_group.data.GROUP_LINK">
+				</md-input-container>
+			</md-card-content>
 		</md-card>
 	</div>
 
-	<!-- Here we will put the sidebar for editting a post -->
 	<div flex-gt-md="30" layout-fill style="max-height: 1800px">
 		<md-card layout-padding style="width: 100%; max-height: 250% !important; min-height: 150% !important;">
 			<md-card-content layout="column">
@@ -117,10 +133,6 @@
 				<md-input-container>
 					<label>Who Should Attend?</label>
 					<input type="text" ng-model="current_group.data.TARGET_AUDIENCE">
-				</md-input-container>
-				<md-input-container>
-					<label>Day of Meeting</label>
-					<input type='text' ng-model="current_group.data.MEET_DAY">
 				</md-input-container>
 				<md-input-container>
 					<label>What time is the meetings held?</label>
@@ -137,10 +149,6 @@
 				<md-input-container>
 					<label>Contact Email Address</label>
 					<input required type="email" ng-model="current_group.data.EMAIL">
-				</md-input-container>
-				<md-input-container>
-					<label>Which City?</label>
-					<input required type="text" ng-model="current_group.data.CAMPUS">
 				</md-input-container>
 				<md-input-container>
 					<label>Where will the meeting be held?</label>
@@ -161,10 +169,6 @@
 				<md-input-container>
 					<label>Semester</label>
 					<input required type="text" ng-model="current_group.data.SEMESTER">
-				</md-input-container>
-				<md-input-container>
-					<label>Group Type</label>
-					<input required type="text" ng-model="current_group.data.GROUP_TYPE">
 				</md-input-container>
 				<md-input-container>
 					<label>Duration</label>
@@ -189,6 +193,7 @@
 	</div>
 </div>
 
+<!-- EDIT FIELDS -->
 <div layout-gt-md="row" ng-if="groups_sub_selected=='edit'" >
 	<div flex-gt-md="70">
 		<md-card layout-padding>
@@ -199,27 +204,42 @@
 				</md-input-container>
 			</md-card-title-text>
 			<md-card-content>
+			<md-input-container style="width: 100%">
+					<label>Day of Meeting ('Sunday', 'Monday', 'Tuesday'...)</label>
+					<input type='text' ng-model="current_group.data.MEET_DAY">
+				</md-input-container>
 				<md-input-container style="width: 100%">
-				<label>Group Description</label>
-			<textarea name="content" ng-model="current_group.data.DESCRIPTION" rows="8"></textarea>
-		</md-input-container>
-		<md-input-container style="width: 100%">
-			<label>Why Pick this Group?</label>
-			<textarea name="content" ng-model="current_group.data.WHY" rows="8"></textarea>
-		</md-input-container>
+					<label>Location/Campus ('Woodbury', 'Eagan', 'Cottage Grove', 'Hastings', 'Other')</label>
+					<input required type="text" ng-model="current_group.data.CAMPUS">
+				</md-input-container>
 				<md-input-container style="width: 100%">
-				<label>Notes</label>
-			<textarea name="content" ng-model="current_group.data.NOTES" rows="8"></textarea>
-		</md-input-container>
-		<md-input-container>
-			<label>Registration Link</label>
-			<input required type="text" ng-model="current_group.data.GROUP_LINK">
-		</md-input-container>
-	</md-card-content>
+					<label>Category ('Young Adult', 'Women', 'Men', 'Couples', 'Support', 'Interest')</label>
+					<input required type="text" ng-model="current_group.data.CATEGORY">
+				</md-input-container>
+				<md-input-container style="width: 100%">
+					<label>Group Type ('Zoom', 'Outdoor', 'Inside')</label>
+					<input required type="text" ng-model="current_group.data.GROUP_TYPE">
+				</md-input-container>
+				<md-input-container style="width: 100%">
+					<label>Group Description</label>
+					<textarea name="content" ng-model="current_group.data.DESCRIPTION" rows="8"></textarea>
+				</md-input-container>
+				<md-input-container style="width: 100%">
+					<label>Why Pick this Group?</label>
+					<textarea name="content" ng-model="current_group.data.WHY" rows="8"></textarea>
+				</md-input-container>
+				<md-input-container style="width: 100%">
+					<label>Notes</label>
+					<textarea name="content" ng-model="current_group.data.NOTES" rows="8"></textarea>
+				</md-input-container>
+				<md-input-container style="width: 100%">
+					<label>Registration Link</label>
+					<input required type="text" ng-model="current_group.data.GROUP_LINK">
+				</md-input-container>
+			</md-card-content>
 		</md-card>
 	</div>
 
-	<!-- Here we will put the sidebar for editting a post -->
 	<div flex-gt-md="30" layout-fill style="max-height: 1800px">
 		<md-card layout-padding style="width: 100%; max-height: 250% !important; min-height: 150% !important;">
 			<md-card-content layout="column">
@@ -230,10 +250,6 @@
 				<md-input-container>
 					<label>Who Should Attend?</label>
 					<input type="text" ng-model="current_group.data.TARGET_AUDIENCE">
-				</md-input-container>
-				<md-input-container>
-					<label>Day of Meeting</label>
-					<input type='text' ng-model="current_group.data.MEET_DAY">
 				</md-input-container>
 				<md-input-container>
 					<label>What time is the meeting held?</label>
@@ -250,10 +266,6 @@
 				<md-input-container>
 					<label>Contact Email Address</label>
 					<input required type="email" ng-model="current_group.data.EMAIL">
-				</md-input-container>
-				<md-input-container>
-					<label>Which City?</label>
-					<input required type="text" ng-model="current_group.data.CAMPUS">
 				</md-input-container>
 				<md-input-container>
 					<label>Where will the meeting be held?</label>
