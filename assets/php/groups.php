@@ -100,7 +100,7 @@
 					<input required type="text" ng-model="current_group.data.CATEGORY">
 				</md-input-container>
 				<md-input-container style="width: 100%">
-					<label>Group Type ('Zoom', 'Outdoor', 'Inside')</label>
+					<label>Group Type ('Zoom', 'Outside', 'Inside')</label>
 					<input required type="text" ng-model="current_group.data.GROUP_TYPE">
 				</md-input-container>
 				<md-input-container style="width: 100%">
@@ -217,7 +217,7 @@
 					<input required type="text" ng-model="current_group.data.CATEGORY">
 				</md-input-container>
 				<md-input-container style="width: 100%">
-					<label>Group Type ('Zoom', 'Outdoor', 'Inside')</label>
+					<label>Group Type ('Zoom', 'Outside', 'Inside')</label>
 					<input required type="text" ng-model="current_group.data.GROUP_TYPE">
 				</md-input-container>
 				<md-input-container style="width: 100%">
