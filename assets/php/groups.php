@@ -100,7 +100,7 @@
 					<input required type="text" ng-model="current_group.data.CATEGORY">
 				</md-input-container>
 				<md-input-container style="width: 100%">
-					<label>Topic ('Care', 'Sermon Rewind', 'Promise Principle', 'The Grace of God', 'Kill the Spider', 'Not a Fan', 'Be the Bridge')</label>
+					<label>Topic ('Care', 'Sermon', 'Promise', 'Grace', 'Spider', 'Fan', 'Bridge')</label>
 					<input required type="text" ng-model="current_group.data.TOPIC">
 				</md-input-container>
 				<md-input-container style="width: 100%">
@@ -221,7 +221,7 @@
 					<input required type="text" ng-model="current_group.data.CATEGORY">
 				</md-input-container>
 				<md-input-container style="width: 100%">
-					<label>Topic ('Care', 'Sermon Rewind', 'Promise Principle', 'The Grace of God', 'Kill the Spider', 'Not a Fan', 'Be the Bridge')</label>
+					<label>Topic ('Care', 'Sermon', 'Promise', 'Grace', 'Spider', 'Fan', 'Bridge')</label>
 					<input required type="text" ng-model="current_group.data.TOPIC">
 				</md-input-container>
 				<md-input-container style="width: 100%">
