@@ -110,6 +110,10 @@ if (array_key_exists('CATEGORY', $obj['data'])) {
 	$obj['data']['CATEGORY'] = iconv('UTF-8', 'ASCII//TRANSLIT', $DB_CONN->real_escape_string($obj['data']['CATEGORY']));
 }
 
+if (array_key_exists('TOPIC', $obj['data'])) {
+	$obj['data']['TOPIC'] = iconv('UTF-8', 'ASCII//TRANSLIT', $DB_CONN->real_escape_string($obj['data']['TOPIC']));
+}
+
 if (array_key_exists('START_TIME', $obj['data'])) {
 	$obj['data']['START_TIME'] = iconv('UTF-8', 'ASCII//TRANSLIT', $DB_CONN->real_escape_string($obj['data']['START_TIME']));
 }

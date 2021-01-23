@@ -100,7 +100,7 @@ if(isset($_POST["submit"])) {
       array_push($upload_array, $keyed_row);
     });
 
-    $expected_headers = "SEMESTER,CATEGORY,GROUP_TYPE,CAMPUS,LOCATION,TITLE,DESCRIPTION,TARGET_AUDIENCE,MEET_DAY,IDEAL_SIZE,MEET_TIME_START,MEET_TIME_END,DURATION,LEADER,PHONE_NUMBER,EMAIL,CO_LEADER,CO_LEADER_PHONE,CO_LEADER_EMAIL,COST,CARE_PROVIDED,NOTES,GROUP_LINK,BOOK_LINKS,WHY";
+    $expected_headers = "SEMESTER,CATEGORY,TOPIC,GROUP_TYPE,CAMPUS,LOCATION,TITLE,DESCRIPTION,TARGET_AUDIENCE,MEET_DAY,IDEAL_SIZE,MEET_TIME_START,MEET_TIME_END,DURATION,LEADER,PHONE_NUMBER,EMAIL,CO_LEADER,CO_LEADER_PHONE,CO_LEADER_EMAIL,COST,CARE_PROVIDED,NOTES,GROUP_LINK,BOOK_LINKS,WHY";
 
     $large_insert_statement = 'INSERT INTO `SMALL_GROUPS` (' . $expected_headers . ',SYS_ID, SYS_CREATED_ON ) VALUES ';
 
@@ -199,7 +199,7 @@ $db->query($query);
       <md-nav-item md-nav-click="goto_page('/index.php?table=Groups')" name="view">
         Browse Groups
       </md-nav-item>
-      <md-nav-item md-nav-click="goto_page('/assets/csv/20200823-groups-upload-template.csv')" name="new">
+      <md-nav-item md-nav-click="goto_page('/assets/csv/20210123-groups-upload-template.csv')" name="new">
         <!-- Leads to a download link of the .csv file -->
         Download Template
       </md-nav-item>

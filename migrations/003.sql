@@ -1,0 +1,3 @@
+-- 
+ALTER TABLE `cr_groups_events`.`small_groups` 
+ADD COLUMN `TOPIC` VARCHAR(45) NULL DEFAULT NULL AFTER `CATEGORY`;
