@@ -199,7 +199,7 @@ $db->query($query);
       <md-nav-item md-nav-click="goto_page('/index.php?table=Groups')" name="view">
         Browse Groups
       </md-nav-item>
-      <md-nav-item md-nav-click="goto_page('/assets/csv/20200823-groups-upload-template.csv')" name="new">
+      <md-nav-item md-nav-click="goto_page('/assets/csv/20210123-groups-upload-template.csv')" name="new">
         <!-- Leads to a download link of the .csv file -->
         Download Template
       </md-nav-item>
