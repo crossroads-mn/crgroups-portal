@@ -101,6 +101,10 @@ if (array_key_exists('GROUP_TYPE', $obj['data'])) {
 	$obj['data']['GROUP_TYPE'] = iconv('UTF-8', 'ASCII//TRANSLIT', $DB_CONN->real_escape_string($obj['data']['GROUP_TYPE']));
 }
 
+if (array_key_exists('TOPIC', $obj['data'])) {
+	$obj['data']['TOPIC'] = iconv('UTF-8', 'ASCII//TRANSLIT', $DB_CONN->real_escape_string($obj['data']['TOPIC']));
+}
+
 if (array_key_exists('CATEGORY', $obj['data'])) {
 	$obj['data']['CATEGORY'] = iconv('UTF-8', 'ASCII//TRANSLIT', $DB_CONN->real_escape_string($obj['data']['CATEGORY']));
 }

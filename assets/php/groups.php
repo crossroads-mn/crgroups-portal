@@ -96,8 +96,12 @@
 					<input required type="text" ng-model="current_group.data.CAMPUS">
 				</md-input-container>
 				<md-input-container style="width: 100%">
-					<label>Category ('Young Adult', 'Women', 'Men', 'Couples', 'Support', 'Interest')</label>
+					<label>Category ('Young Adult', 'Women', 'Men', 'Couples')</label>
 					<input required type="text" ng-model="current_group.data.CATEGORY">
+				</md-input-container>
+				<md-input-container style="width: 100%">
+					<label>Topic ('Care', 'Sermon Rewind', 'Promise Principle', 'The Grace of God', 'Kill the Spider', 'Not a Fan', 'Be the Bridge')</label>
+					<input required type="text" ng-model="current_group.data.TOPIC">
 				</md-input-container>
 				<md-input-container style="width: 100%">
 					<label>Group Type ('Zoom', 'Outside', 'Inside')</label>
@@ -213,8 +217,12 @@
 					<input required type="text" ng-model="current_group.data.CAMPUS">
 				</md-input-container>
 				<md-input-container style="width: 100%">
-					<label>Category ('Young Adult', 'Women', 'Men', 'Couples', 'Support', 'Interest')</label>
+					<label>Category ('Young Adult', 'Women', 'Men', 'Couples')</label>
 					<input required type="text" ng-model="current_group.data.CATEGORY">
+				</md-input-container>
+				<md-input-container style="width: 100%">
+					<label>Topic ('Care', 'Sermon Rewind', 'Promise Principle', 'The Grace of God', 'Kill the Spider', 'Not a Fan', 'Be the Bridge')</label>
+					<input required type="text" ng-model="current_group.data.TOPIC">
 				</md-input-container>
 				<md-input-container style="width: 100%">
 					<label>Group Type ('Zoom', 'Outside', 'Inside')</label>
@@ -286,10 +294,6 @@
 				<md-input-container>
 					<label>Semester</label>
 					<input required type="text" ng-model="current_group.data.SEMESTER">
-				</md-input-container>
-				<md-input-container>
-					<label>Group Type</label>
-					<input required type="text" ng-model="current_group.data.GROUP_TYPE">
 				</md-input-container>
 				<md-input-container>
 					<label>Duration</label>
