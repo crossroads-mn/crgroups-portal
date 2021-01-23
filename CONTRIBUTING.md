@@ -11,7 +11,7 @@ Startup the app and nginx containers with a docker shared network
 docker-compose up
 ```
 
-Verify the app if working at http://localhost:8080
+Verify the app if working at http://localhost:3000
 
 ## Teardown
 
